@@ -35,6 +35,7 @@ int display_item(linked_list *ll)
 	
 }
 
+
 int display_list(linked_list *ll)
 {
 	linked_list *list0 = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for searching
@@ -50,6 +51,7 @@ int display_list(linked_list *ll)
 	return 0;
 	
 }
+
 
 linked_list * search_from_list(linked_list *ll, char *s)
 {
@@ -67,7 +69,7 @@ linked_list * search_from_list(linked_list *ll, char *s)
 		}
 		list0 = list0->next;
 	}
-	if ((strcmp (list0 -> data,s))==0) return list0;
+	if ((strcmp (list0 -> data,s))==0) return list0; //compare last element
 	
 	return null;
 	
@@ -143,6 +145,7 @@ int delete_from_list(linked_list *ll, int index)
 
 }
 
+
 int empty_list(linked_list *ll)
 {
 	if (!ll) return -1;// Check if null pointer
@@ -163,6 +166,7 @@ int empty_list(linked_list *ll)
 	return count;
 	
 }
+
 
 int swap_items(linked_list *f, linked_list *s) 
 {
@@ -219,6 +223,7 @@ int swap_items(linked_list *f, linked_list *s)
 	return 0;
 	
 }
+
 
 int sort_list(linked_list *ll)
 {
