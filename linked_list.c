@@ -63,6 +63,8 @@ linked_list * search_from_list(linked_list *ll, char *s)
 		list0 = list0->next;
 	}
 	
+	if ((strcmp (list0 -> data,s))==0) return list0; //check last element
+	
 	return null;
 	
 }
@@ -124,6 +126,7 @@ int delete_from_list(linked_list *ll, int index)
 	ll->index -= 1;
 	ll = ll->next;	
 	}
+	ll->index -= 1;
 	
 	ll=list0;
 	//display_list(ll);
