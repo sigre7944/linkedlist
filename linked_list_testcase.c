@@ -1,178 +1,413 @@
 #include <gtest/gtest.h>
-#include (char *)"linked_list.h"
+#include "linked_list.h"
 
-TEST(AddToListTest,NormalTest)
-{
-  int result;
-  linked_list pHead = (linked_list* )malloc(sizeof(linked_list));
-  pHead->data = NULL;
-  pHead->next = NULL;
-  
-  result = add_to_list(pHead, (char *)"a21321321AAA@@@1");
-  
-  ASSERT_EQ(result,1);
-  ASSERT_STREQ("a21321321AAA@@@1", pHead->next->data);
+/***************************************************************************/
+TEST(add_to_list,normal) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
 
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));
 
-  
-  result = add_to_list(pHead, (char *)"a123AAA2213213@@@@@!!!!!!!");
-  ASSERT_EQ(result,2);
-  ASSERT_STREQ("a123AAA2213213@@@@@!!!!!!!", pHead->next->next->data);
+    head->next=NULL; 
+    head->data=str; 
+    head->index=0;
 
+    i=add_to_list(head,str1);
+    EXPECT_EQ(1,i);
+
+    i=add_to_list(head,str2);
+    EXPECT_EQ(2,i);
+
+    i=add_to_list(head,str3);
+    EXPECT_EQ(3,i);
+
+    i=add_to_list(head,str4);
+    EXPECT_EQ(4,i);
+
+    i=add_to_list(head,str5);
+    EXPECT_EQ(5,i);
+
+    i=add_to_list(head,str6);
+    EXPECT_EQ(6,i);
 
 }
 
+/***************************************************************************/
+TEST(add_to_list,null_pointer) {
+    char *str{0};
 
-TEST(DisplayItem,NormalTest)
-{
-  int result;
-  linked_list* pHead = (linked_list* )malloc(sizeof(linked_list));
-  pHead->data = NULL;
-  pHead->next = NULL;
-  
-  result = display_item(pHead);
-  ASSERT_EQ(result, -1);
+    int i;
 
-  printf("\n----\n");
-  
-  pHead->data = (char *)"a123AAA2213213@@@@@!!!!!!!";
-  result = display_item(pHead);
-  ASSERT_EQ(result, 0);
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));
 
-  printf("\n----\n");
-  
-  pHead->data = (char *)"a123AAA2213213@@@@@!!!!!!!a123AAA2213213@@@@@!!!!!!!";
-  result = display_item(pHead);
-  ASSERT_EQ(result, 0);
+    head->next=NULL; 
+    head->data=str; 
+    head->index=0;
 
-  printf("\n----\n");
+    i=add_to_list(head,str);
+    EXPECT_EQ(-1,i);
 }
 
-TEST(DisplayList,NormalTest)
+/***************************************************************************/
+TEST(display_item,add_to_list)
 {
-  linked_list *pHead = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next = NULL;
-  pHead->data = NULL;
+    int result;
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
 
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
 
-  ASSERT_EQ(0,display_list(pHead));
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
 
+    i=add_to_list(head,str1);
+    EXPECT_EQ(head->next->index,1);
+    EXPECT_EQ(i,1);
+    EXPECT_STREQ(head->next->data,str1);
 
-  
-  pHead->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next = NULL;
-  pHead->next->data = (char *)"layer 1";
-  ASSERT_EQ(1,display_list(pHead));
-  
-  printf("\n----\n");
-  
-  pHead->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next = NULL;
-  pHead->next->next->data = (char *)"layer 2";
-  ASSERT_EQ(2,display_list(pHead));
+    i=add_to_list(head,str2);
+   // display_list(head);
+    EXPECT_EQ(head->next->next->index,2);
+    EXPECT_EQ(i,2);
+    EXPECT_STREQ(head->next->next->data,str2);
 
-  printf("\n----\n");
-  
-  pHead->next->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next->next = NULL;
-  pHead->next->next->next->data = (char *)"layer 3";
-  ASSERT_EQ(3,display_list(pHead));
+    i=add_to_list(head,str3);
+   // display_list(head);
+    EXPECT_EQ(head->next->next->next->index,3);
+    EXPECT_EQ(i,3);
+    EXPECT_STREQ(head->next->next->next->data,str3);
+
+    i=add_to_list(head,str4);
+   // display_list(head);
+    EXPECT_EQ(head->next->next->next->next->index,4);
+    EXPECT_EQ(i,4);
+    EXPECT_STREQ(head->next->next->next->next->data,str4);
+
+    i=add_to_list(head,str5);
+   // display_list(head);
+    EXPECT_EQ(head->next->next->next->next->next->index,5);
+    EXPECT_EQ(i,5);
+    EXPECT_STREQ(head->next->next->next->next->next->data,str5);
+
+    i=add_to_list(head,str6);
+    display_list(head);
+    EXPECT_EQ(head->next->next->next->next->next->next->index,6);
+    EXPECT_EQ(i,6);
+    EXPECT_STREQ(head->next->next->next->next->next->next->data,str6);
+
 }
 
-TEST(SearchFromList,NormalTest)
+/***************************************************************************/
+TEST(search,normal)
 {
-  int result;
-  linked_list *pHead = (linked_list* )malloc(sizeof(linked_list));
-  linked_list *tmp;
-  
-  pHead->next = (linked_list* )malloc(sizeof(linked_list));  
-  pHead->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next->next = NULL;
-  
+    char str[15]="List Start";
+    char str1[15]="second";
+    char str2[15]="third";
 
-  pHead->next->data = (char *)"layer 1";
-  pHead->next->next->data = (char *)"layer 2";
-  pHead->next->next->next->data = (char *)"layer 3";
-  
-  
-  tmp = search_from_list(pHead,"layer 4");
-  ASSERT_EQ(NULL,tmp);
+    linked_list *found;
+    struct linked_list *head;
+
+    head = (struct linked_list*) malloc(sizeof(linked_list));
+    head->data=str;
+    head->index=0;
 
 
-  tmp = search_from_list(pHead,"layer 1");
-  ASSERT_STREQ(tmp->data,pHead->next->data);
-  ASSERT_EQ(tmp->next,pHead->next->next);
+    head->next = (struct linked_list*) malloc(sizeof(linked_list));
+    head->next->data=str1;
+    head->next->index=1;
 
-  tmp = search_from_list(pHead,"layer 2");
-  ASSERT_STREQ(tmp->data,pHead->next->next->data);
-  ASSERT_EQ(tmp->next,pHead->next->next->next);
+    head->next->next->next = (struct linked_list*) malloc(sizeof(linked_list));
+    head->next->next->index=2;
+    head->next->next->data=str2;
 
-  tmp = search_from_list(pHead,"layer 3");
-  ASSERT_STREQ(tmp->data,pHead->next->next->next->data);
-  ASSERT_EQ(tmp->next,pHead->next->next->next->next);
-  
+    head->next->next->next->next = NULL;
+
+    found=search_from_list(head,(char *)"third");
+
+    EXPECT_EQ(found->index,2);
+    EXPECT_STREQ(str2,found->data);
 }
 
-
-
-TEST(DeleteFromList,NormalTest)
+/***************************************************************************/
+TEST(search,not_found)
 {
-  linked_list *pHead = (linked_list* )malloc(sizeof(linked_list));
-  
-  pHead->next = (linked_list* )malloc(sizeof(linked_list));  
-  pHead->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next->next = NULL;
-  
+    char str[15]="List Start";
 
-  pHead->next->data = (char *)"layer 1";
-  pHead->next->next->data = (char *)"layer 2";
-  pHead->next->next->next->data = (char *)"layer 3";
+    linked_list *found;
 
-  pHead->next->index = 1;
-  pHead->next->next->index = 2;
-  pHead->next->next->next->index = 3;
-  
-  
-  ASSERT_EQ(2, delete_from_list(pHead, 1));
-  ASSERT_EQ(1, delete_from_list(pHead, 2));
-  ASSERT_EQ(-1, delete_from_list(pHead, 4));
-  ASSERT_EQ(-1, delete_from_list(pHead, 0));
-  ASSERT_EQ(-1, delete_from_list(pHead, -1));
-  ASSERT_EQ(0, delete_from_list(pHead, 3));
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+    found=search_from_list(head,(char *)"third");
+
+    EXPECT_EQ((int *)found,(int *)NULL);
 }
 
-
-TEST(EmptyList,NormalTest)
+/***************************************************************************/
+TEST(display_list,empty)
 {
-  linked_list *pHead = (linked_list* )malloc(sizeof(linked_list));
-  
-  pHead->next = (linked_list* )malloc(sizeof(linked_list));  
-  pHead->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next = (linked_list* )malloc(sizeof(linked_list));
-  pHead->next->next->next->next = NULL;
-  
+    int result;
+    char str[15]="List Start";
 
-  pHead->next->data = (char *)"layer 1";
-  pHead->next->next->data = (char *)"layer 2";
-  pHead->next->next->next->data = (char *)"layer 3";
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
 
-  pHead->next->index = 1;
-  pHead->next->next->index = 2;
-  pHead->next->next->next->index = 3;
-  
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
 
-  empty_list(pHead->next->next->next);
-  ASSERT_EQ(NULL, pHead->next->next->next->next);
+    display_list(head);
 
-  empty_list(pHead->next->next);
-  ASSERT_EQ(NULL, pHead->next->next->next);
-
-  empty_list(pHead->next);
-  ASSERT_EQ(NULL, pHead->next->next);
-  
-  empty_list(pHead);
-  ASSERT_EQ(NULL, pHead->next);
 }
 
+/***************************************************************************/
+TEST(display_list,normal)
+{
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+
+
+    i=add_to_list(head,str1);
+    i=add_to_list(head,str2);
+    i=add_to_list(head,str3);
+    i=add_to_list(head,str4);
+    i=add_to_list(head,str5);
+    i=add_to_list(head,str6);
+
+
+    display_list(head);
+}
+
+/***************************************************************************/
+TEST(delete,normal)
+{
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+	int del;
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+
+    i=add_to_list(head,str1);
+    i=add_to_list(head,str2);
+    i=add_to_list(head,str3);
+    i=add_to_list(head,str4);
+    i=add_to_list(head,str5);
+    i=add_to_list(head,str6);
+
+    del = delete_from_list(head,2);
+	
+	EXPECT_EQ(del,6);
+	EXPECT_STREQ(str3,head->next->next->data);
+
+}
+
+/***************************************************************************/
+TEST(delete,multi) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+    i=add_to_list(head,str1);
+    i=add_to_list(head,str2);
+    i=add_to_list(head,str3);
+    i=add_to_list(head,str4);
+    i=add_to_list(head,str5);
+    i=add_to_list(head,str6);
+
+    for(i=0; i<40; i++)
+        add_to_list(head,str1);
+
+	EXPECT_EQ(delete_from_list(head,12),46);
+    EXPECT_EQ(delete_from_list(head,22),45);
+	EXPECT_EQ(delete_from_list(head,25),44);
+	EXPECT_EQ(delete_from_list(head,32),43);
+	EXPECT_EQ(delete_from_list(head,38),42);
+	
+	EXPECT_EQ(delete_from_list(head,380),-1);
+}
+
+/***************************************************************************/
+TEST(empty,normal) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+    i=add_to_list(head,str1);
+    i=add_to_list(head,str2);
+    i=add_to_list(head,str3);
+    i=add_to_list(head,str4);
+    i=add_to_list(head,str5);
+    i=add_to_list(head,str6);
+	EXPECT_EQ(empty_list(head),7);
+	
+}
+
+/***************************************************************************/
+TEST(empty,single_value) {
+    char str[15]="List Start";
+    int i;
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+	EXPECT_EQ(empty_list(head),1);
+	
+}
+
+/***************************************************************************/
+TEST(empty,null_pointer) {
+	linked_list *head ={0};
+	
+	EXPECT_EQ(empty_list(head),-1);
+}
+
+/***************************************************************************/
+TEST(swap,normal) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+
+    int i;
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+    add_to_list(head,str1);
+    add_to_list(head,str2);
+    add_to_list(head,str3);
+
+	
+	EXPECT_EQ(swap_items(head->next, head->next->next), 0);
+	EXPECT_STREQ(str2, head->next);
+	
+}
+
+/***************************************************************************/
+TEST(swap,not_in the list) {
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+
+    int i;
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+    add_to_list(head,str1);
+    add_to_list(head,str2);
+
+	EXPECT_EQ(swap_items(head->next, head->next->next), 0);
+	EXPECT_STREQ(str2, head->next);
+	
+}
+
+/***************************************************************************/
+TEST(swap,null_pointer) {
+	linked_list *head ={0};
+	linked_list *head1 ={0};
+	
+	EXPECT_EQ(swap_items(head, head1),-1);
+	
+}
+
+/***************************************************************************/
+/*TEST(sort,normal)
+{
+    char str[15]="List Start";
+    char str1[10]="zero";
+    char str2[10]="first";
+    char str3[10]="second";
+    char str4[10]="third";
+    char str5[10]="fourth";
+    char str6[10]="fifth";
+    int i;
+
+    linked_list *head = (struct linked_list*) malloc(sizeof(linked_list));  
+
+    head->next=NULL;
+    head->data=str;
+    head->index=0;
+
+    i=add_to_list(head,str1);
+    i=add_to_list(head,str2);
+    i=add_to_list(head,str3);
+    i=add_to_list(head,str4);
+    i=add_to_list(head,str5);
+    i=add_to_list(head,str6);
+
+    sort_list(head);
+
+    display_list(head);
+
+}*/
