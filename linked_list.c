@@ -41,6 +41,7 @@ int display_list(linked_list *ll)
 		display_item(list0);
 		list0 = list0->next;
 	}
+	display_item(list0);
 	
 	return 0;
 }
@@ -81,8 +82,8 @@ int delete_from_list(linked_list *ll, int index)
 	
 	while(listcount -> next != NULL) //until there's no next
 	{	
-	length ++;
-	listcount = listcount->next;	
+		length ++;  //find length of linked list
+		listcount = listcount->next;	
 	}	
 	
 	if (index >= length)
@@ -132,7 +133,8 @@ int delete_from_list(linked_list *ll, int index)
 
 }
 
-int empty_list(linked_list *ll){
+int empty_list(linked_list *ll)
+{
 	if (!ll) return -1;// Check if null pointer
 	int count = 1; //count the number of items that will be deleted
 	
@@ -150,17 +152,18 @@ int empty_list(linked_list *ll){
 	return count;
 }
 
-int swap_items(linked_list *f, linked_list *s) {
+int swap_items(linked_list *f, linked_list *s) 
+{
 	if (!f) return -1;// Check if null pointer
 	if (!s) return -1;// Check if null pointer
 	int same = 0; //check if s is from same linked list as f
 	char *data_store; //for storing data
-	int index_store; //for storing index
 	
 	linked_list *f0 = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for checking if s is from the same link list as f
 	linked_list *s0 = (struct linked_list*) malloc(sizeof(linked_list));
 	
-	f0 = s;
+	f0 = f;
+	s0 = s;
 	
 	while(f0 -> next != NULL ) //until there's no next
 	{	
@@ -170,7 +173,12 @@ int swap_items(linked_list *f, linked_list *s) {
 		break;
 	}
 	f0 = f0 -> next;
-	}	
+	}
+
+	if (f0 == s) //check if s is in the same linked list as f with the last link
+	{
+		same = 1;
+	}
 	
 	while(s0 -> next != NULL ) //until there's no next
 	{	
@@ -182,13 +190,72 @@ int swap_items(linked_list *f, linked_list *s) {
 	s0 = s0 -> next;
 	}	
 	
+	if (f0 == s) //check if s is in the same linked list as f with the last link
+	{
+		same = 1;
+	}
+	
 	if (same == 0) //if f and s are from different linked list
 	{
 		return -1;
 	}
 	
-	index_store = f->index;
 	data_store = f->data;
+	f->data = s->data;
+	s->data = data_store;
 	
-	f->
+	return 0;
+}
+
+int sort_list(linked_list *ll)
+{
+	if (!ll) return -1;// Check if null pointer
+	
+	linked_list *list0 = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for storing the head node
+	list0 = ll; 
+	linked_list *listcount = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for counting
+	listcount = ll; 
+	
+	int sorted = 0; // status of whether it has been sorted
+	int length=1; //length of the linked list
+	int i = 0, j = 0;
+	
+	while(listcount -> next != NULL) //until there's no next
+	{	
+		length ++; //find length of linked list
+		listcount = listcount->next;	
+	}	
+
+	for (i = 0; i < length - 1; i ++) 
+	{
+		for (j = 0; j < length - i - 1; j++) 
+		{
+			if (strcmp(ll -> data, ll->next->data)>0)
+			{
+				swap_items(ll, ll->next);
+			}
+			ll = ll->next;
+		}	
+	ll = list0;
+	}
+	
+	return 0;
+}
+
+
+int linkedlist_status(linked_list *ll) 
+{
+	if (!ll) return 0;// Check if null pointer
+	
+	int length=1; //length of the linked list
+	linked_list *listcount = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for counting
+	listcount = ll; 
+	
+	while(listcount -> next != NULL) //until there's no next
+	{	
+		length ++; //find length of linked list
+		listcount = listcount->next;	
+	}	
+	
+	return length;
 }

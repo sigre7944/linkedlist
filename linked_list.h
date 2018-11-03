@@ -45,3 +45,10 @@ int swap_items(linked_list *f, linked_list *s);
     //	0 in OK
     //  -1 if either items was not n the list (content of the list did not change)
 
+int sort_list(linked_list *ll);
+    //Sort list in rising order based on the data
+	
+int linkedlist_status(linked_list *ll);
+    //will count the number of elements in the list
+    //return value: amount
+
