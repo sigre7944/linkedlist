@@ -132,3 +132,63 @@ int delete_from_list(linked_list *ll, int index)
 
 }
 
+int empty_list(linked_list *ll){
+	if (!ll) return -1;// Check if null pointer
+	int count = 1; //count the number of items that will be deleted
+	
+	linked_list *list0 = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for storing the head before realeasing it
+	 
+	
+	while(ll -> next != NULL) //until there's no next
+	{	
+	list0 = ll;
+	count ++;
+	free(ll);
+	ll = list0->next;
+	}	
+	
+	return count;
+}
+
+int swap_items(linked_list *f, linked_list *s) {
+	if (!f) return -1;// Check if null pointer
+	if (!s) return -1;// Check if null pointer
+	int same = 0; //check if s is from same linked list as f
+	char *data_store; //for storing data
+	int index_store; //for storing index
+	
+	linked_list *f0 = (struct linked_list*) malloc(sizeof(linked_list)); //initialize for checking if s is from the same link list as f
+	linked_list *s0 = (struct linked_list*) malloc(sizeof(linked_list));
+	
+	f0 = s;
+	
+	while(f0 -> next != NULL ) //until there's no next
+	{	
+	if (f0 == s) //check if s is in the same linked list as f
+	{
+		same = 1;
+		break;
+	}
+	f0 = f0 -> next;
+	}	
+	
+	while(s0 -> next != NULL ) //until there's no next
+	{	
+	if (s0 == f) //check if f is in the same linked list as s
+	{
+		same = 1;
+		break;
+	}
+	s0 = s0 -> next;
+	}	
+	
+	if (same == 0) //if f and s are from different linked list
+	{
+		return -1;
+	}
+	
+	index_store = f->index;
+	data_store = f->data;
+	
+	f->
+}
